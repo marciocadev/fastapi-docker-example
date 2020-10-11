@@ -1,0 +1,10 @@
+asyncpg>=0.21.0,<0.22.0
+databases[postgresql]>=0.3.2,<0.4.0
+fastapi>=0.61.0,<0.62.0
+SQLAlchemy>=1.3.19,<1.4.0
+uvicorn>=0.11.8,<0.12.0
+httpx>=0.14.3,<0.15.0
+python-jose[cryptography]>=3.2.0,<3.3.0
+passlib[bcrypt]>=1.7.2,<1.8.0
+python-multipart>=0.0.5,<0.1.0
+devtools[pygments]>=0.6,<0.7
