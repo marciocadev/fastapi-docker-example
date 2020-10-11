@@ -1,6 +1,8 @@
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
+from devtools import debug
+
 router = APIRouter()
 
 app = FastAPI(openapi_url="/api/v1/fast/openapi.json", docs_url="/api/v1/fast/docs")
@@ -16,8 +18,7 @@ app.add_middleware(
 
 @router.get("/")
 async def root():
-    txt = {"message": "Hello"}
-    return txt
-    #{"message": "Hello World"}
+    debug("Entrou no get")
+    return {"message": "Hello World"}
     
 app.include_router(router, prefix='/api/v1/fast', tags=['fast'])
