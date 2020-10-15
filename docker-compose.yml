@@ -10,10 +10,29 @@ services:
         ports:
             - 8001:8000
             - 5678:5678
-        # environment: 
-        #     - DATABASE_URI=postgresql://user_db_username:user_db_password@user_db/user_db_dev
-        # depends_on: 
-        #     - user_db
+        environment: 
+            - DATABASE_URI=postgresql://fast_db_username:fast_db_password@fast_db/fast_db_dev
+        depends_on: 
+            - fast_db
+    
+    fast_db:
+        image: postgres:12.1-alpine
+        container_name: fast_db
+        volumes:
+            - db_data_fast:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=fast_db_username
+            - POSTGRES_PASSORD=fast_db_password
+            - POSTGRES_DB=fast_db_dev
+
+    pgadmin:
+        image: dpage/pgadmin4:4.25
+        environment:
+            PGADMIN_DEFAULT_PASSWORD: admin123
+            PGADMIN_DEFAULT_EMAIL: marciocadev@gmail.com
+        ports:
+        - 15432:80
+
     nginx:
         image: nginx:1.19.2
         container_name: nginx
@@ -62,3 +81,5 @@ services:
             ELASTICSEARCH_URL: http://elasticsearch:9200
             ELASTICSEARCH_HOSTS: http://elasticsearch:9200
     
+volumes:
+    db_data_fast:

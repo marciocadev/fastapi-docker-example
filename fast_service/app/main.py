@@ -1,9 +1,15 @@
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api import fast
+from app.api.db import database, engine, metadata
+
 from devtools import debug
 
-router = APIRouter()
+
+metadata.create_all(engine)
+
+# router = APIRouter()
 
 app = FastAPI(openapi_url="/api/v1/fast/openapi.json", docs_url="/api/v1/fast/docs")
 
@@ -16,9 +22,18 @@ app.add_middleware(
 )
 
 
-@router.get("/")
-async def root():
-    debug("Entrou no get")
-    return {"message": "Hello World"}
+# @router.get("/")
+# async def root():
+#     debug("Entrou no get")
+#     return {"message": "Hello World"}
     
-app.include_router(router, prefix='/api/v1/fast', tags=['fast'])
+@app.on_event("startup")
+async def startup():
+    await database.connect()
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
+
+app.include_router(fast.router, prefix='/api/v1/fast', tags=['fast'])
