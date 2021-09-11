@@ -7,6 +7,8 @@
 # Run
 - docker-compose up -d
 
+# Down
+- docker-compose down -d
 
 ## Remove docker image <none>
 docker rmi $(docker images -f 'dangling=true' -q)
