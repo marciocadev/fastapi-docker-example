@@ -10,5 +10,8 @@
 # Down
 - docker-compose down -d
 
+# Remove all images
+docker rmi $(docker image ls -q)
+
 ## Remove docker image <none>
-docker rmi $(docker images -f 'dangling=true' -q)
+docker rmi $(docker image ls -f 'dangling=true' -q)
